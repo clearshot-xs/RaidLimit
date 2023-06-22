@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Oxide.Plugins
 {
-    [Info("Raid Limit", "Clearshot", "1.2.0")]
+    [Info("Raid Limit", "Clearshot", "1.3.0")]
     [Description("Limit the number of raids")]
     class RaidLimit : CovalencePlugin
     {
@@ -53,6 +53,11 @@ namespace Oxide.Plugins
         };
 
         #region Hooks
+
+        private void Init()
+        {
+            //permission.RegisterPermission("", this);
+        }
 
         private void OnServerInitialized()
         {
@@ -641,6 +646,16 @@ namespace Oxide.Plugins
                 _adminsWatching.Remove(pl.userID);
             else
                 _adminsWatching.Add(pl.userID);
+        }
+
+        [Command("rl.reset")]
+        private void ResetRaidLimitCommand(IPlayer player, string command, string[] args)
+        {
+            if (player == null || !player.IsServer) return;
+
+            Puts($"Removing {_raidLimits.Count} raid limits");
+            _raidLimits = new Dictionary<ulong, Dictionary<ulong, RaidLimitLog>>();
+            SaveRaidLimits(true);
         }
 
         /*[Command("rl.save")]

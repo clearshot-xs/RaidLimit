@@ -48,3 +48,7 @@ Data files are automatically reset when a wipe is detected.
 ## Admin Commands
 
 - `/rl.live` - View the raid groups active on the server (similar to admin radar)
+
+## Server Commands
+
+- `rl.reset` - Force reset raid limits for all players
